@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120" width="100" height="120">
+  <!-- Vaso -->
+  <path d="M 20 20 L 20 90 L 30 95 L 70 95 L 80 90 L 80 20 Z" fill="none" stroke="#2d1b0e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Base del vaso -->
+  <ellipse cx="50" cy="95" rx="25" ry="3" fill="#2d1b0e"/>
+  
+  <!-- Bebida (líquido ámbar-naranja) -->
+  <defs>
+    <linearGradient id="drinkGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff8c42;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d2691e;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect x="22" y="50" width="56" height="38" fill="url(#drinkGradient)" rx="2"/>
+  
+  <!-- Cubitos de hielo -->
+  <rect x="30" y="60" width="12" height="12" fill="#fff8dc" stroke="#d3d3d3" stroke-width="1" rx="1" opacity="0.8"/>
+  <rect x="48" y="55" width="12" height="12" fill="#fff8dc" stroke="#d3d3d3" stroke-width="1" rx="1" opacity="0.8"/>
+  <rect x="35" y="70" width="12" height="12" fill="#fff8dc" stroke="#d3d3d3" stroke-width="1" rx="1" opacity="0.8"/>
+  
+  <!-- Espuma/crema -->
+  <path d="M 22 50 Q 30 45, 35 50 Q 40 45, 50 50 Q 60 45, 65 50 Q 70 45, 78 50 L 78 52 L 22 52 Z" fill="#ffffff" stroke="#2d1b0e" stroke-width="2"/>
+  <path d="M 25 50 Q 30 48, 35 50" fill="none" stroke="#2d1b0e" stroke-width="1" opacity="0.3"/>
+  <path d="M 45 50 Q 50 48, 55 50" fill="none" stroke="#2d1b0e" stroke-width="1" opacity="0.3"/>
+  <path d="M 65 50 Q 70 48, 75 50" fill="none" stroke="#2d1b0e" stroke-width="1" opacity="0.3"/>
+  
+  <!-- Burbujas en la bebida -->
+  <circle cx="35" cy="65" r="1.5" fill="#ffa500" opacity="0.6"/>
+  <circle cx="55" cy="70" r="1" fill="#ffa500" opacity="0.6"/>
+  <circle cx="65" cy="65" r="1.5" fill="#ffa500" opacity="0.6"/>
+  <circle cx="45" cy="75" r="1" fill="#ffa500" opacity="0.6"/>
+  
+  <!-- Icono de brillo -->
+  <g transform="translate(75, 15)">
+    <path d="M 0 -8 L 2 -2 L 8 0 L 2 2 L 0 8 L -2 2 L -8 0 L -2 -2 Z" fill="#ffd700" stroke="#ff8c00" stroke-width="1"/>
+  </g>
+</svg>

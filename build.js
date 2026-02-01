@@ -56,19 +56,31 @@ indexHtml = indexHtml.replace(
     configScript + '\n    <script type="module" src="/src/app.js"></script>'
 );
 
-// Escribir index.html procesado
-writeFileSync(join(distDir, 'index.html'), indexHtml);
+// Crear directorio public en dist
+const distPublicDir = join(distDir, 'public');
+mkdirSync(distPublicDir, { recursive: true });
 
-// Copiar _redirects si existe
-const redirectsPath = join(publicDir, '_redirects');
-try {
-    if (statSync(redirectsPath).isFile()) {
-        console.log('Copiando _redirects...');
-        copyFileSync(redirectsPath, join(distDir, '_redirects'));
+// Escribir index.html procesado en dist/public
+writeFileSync(join(distPublicDir, 'index.html'), indexHtml);
+
+// Copiar todos los archivos estáticos de public (excepto index.html que ya procesamos)
+console.log('Copiando archivos estáticos de public...');
+const publicEntries = readdirSync(publicDir, { withFileTypes: true });
+for (const entry of publicEntries) {
+    const srcPath = join(publicDir, entry.name);
+    const destPath = join(distPublicDir, entry.name);
+    
+    // Saltar index.html ya que lo procesamos arriba
+    if (entry.name === 'index.html') {
+        continue;
     }
-} catch (err) {
-    // _redirects no existe aún, se creará después
-    console.log('_redirects no encontrado, se creará después');
+    
+    if (entry.isDirectory()) {
+        copyDir(srcPath, destPath);
+    } else {
+        copyFileSync(srcPath, destPath);
+        console.log(`  Copiado: ${entry.name}`);
+    }
 }
 
 console.log('Build completado en:', distDir);
