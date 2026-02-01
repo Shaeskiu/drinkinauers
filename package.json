@@ -1,0 +1,17 @@
+{
+  "name": "drink-tracker",
+  "version": "1.0.0",
+  "description": "A mobile-first web application for tracking drinks in group competitions",
+  "type": "module",
+  "scripts": {
+    "build": "node build.js",
+    "dev": "echo 'Use docker-compose up -d for local development'"
+  },
+  "keywords": [
+    "drink-tracker",
+    "supabase",
+    "spa"
+  ],
+  "author": "",
+  "license": "ISC"
+}

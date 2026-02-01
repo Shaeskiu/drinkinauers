@@ -1,0 +1,130 @@
+/* Custom styles for the drink tracker app */
+
+/* Ensure full height and prevent scrolling issues */
+html, body {
+    height: 100%;
+    overflow-x: hidden;
+}
+
+/* Smooth transitions */
+* {
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+/* Disable text selection on buttons for better mobile UX */
+button {
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Large touch targets */
+.drink-btn {
+    min-height: 80px;
+    touch-action: manipulation;
+}
+
+/* Prevent zoom on input focus (iOS) */
+input, select, textarea {
+    font-size: 16px;
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1f2937;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #4b5563;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #6b7280;
+}
+
+/* Orange color variations */
+.bg-orange-500 {
+    background-color: #f97316;
+}
+
+.hover\:bg-orange-600:hover {
+    background-color: #ea580c;
+}
+
+.active\:bg-orange-700:active {
+    background-color: #c2410c;
+}
+
+.bg-gray-750 {
+    background-color: #374151;
+}
+
+.hover\:bg-gray-750:hover {
+    background-color: #374151;
+}
+
+/* Code input styling */
+.code-input {
+    caret-color: transparent;
+}
+
+.code-input:focus {
+    caret-color: #f97316;
+}
+
+/* Drink type item - ensure it doesn't overflow */
+.drink-type-item {
+    min-width: 0;
+    width: 100%;
+}
+
+.drink-type-item input[data-name] {
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+/* Toast notifications - Mobile first */
+.toast-notification {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+}
+
+.toast-close {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Modal de confirmación - Mobile first */
+.modal-dialog {
+    overscroll-behavior: contain;
+}
+
+.modal-content {
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-btn-confirm,
+.modal-btn-cancel {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Asegurar que los toasts no interfieran con el contenido */
+#toast-container {
+    max-height: 100vh;
+    overflow: hidden;
+}
+
+/* Animaciones suaves para móviles */
+@media (prefers-reduced-motion: reduce) {
+    .toast-notification,
+    .modal-content,
+    #modal-backdrop {
+        transition: none;
+    }
+}
