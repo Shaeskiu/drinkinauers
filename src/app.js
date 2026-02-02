@@ -2,7 +2,7 @@ import { subscribe, setCurrentView, loadAdminToken, loadCurrentUser, getState, s
 import { supabase } from './supabase.js';
 import { render as renderHome } from './views/home.js';
 import { render as renderLogin } from './views/login.js';
-import { render as renderGroups } from './views/groups.js';
+import { render as renderGroups, cleanup as cleanupGroups } from './views/groups.js';
 import { render as renderCreateGroup } from './views/create-group.js';
 import { render as renderJoinGroup } from './views/join-group.js';
 import { render as renderGroupDetail } from './views/group-detail.js';
@@ -104,7 +104,7 @@ subscribe((state) => {
     isRenderingView = true;
     console.log('[app.js] Starting render, isRenderingView set to true');
     
-    // Cleanup previous view if switching away from room
+    // Cleanup previous view if switching away from room or groups
     if (currentRenderedView === 'room' && state.currentView !== 'room') {
         console.log('[app.js] WARNING: Switching away from room view!');
         console.log('[app.js] Previous view was room, new view is:', state.currentView);
@@ -117,6 +117,9 @@ subscribe((state) => {
         });
         console.log('[app.js] Cleaning up room view');
         cleanupRoom();
+    } else if (currentRenderedView === 'groups' && state.currentView !== 'groups') {
+        console.log('[app.js] Switching away from groups view, cleaning up');
+        cleanupGroups();
     }
     
     // Store the previous view before updating
