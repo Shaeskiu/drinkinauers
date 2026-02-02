@@ -36,10 +36,10 @@ export async function render() {
         loadGroupMember()
     ]);
     
-    // Get user's nickname for this group (default to display_name with unique suffix if needed)
+    // Get user's nickname for this group (default to email with unique suffix if needed)
     let userNickname = groupMember?.nickname;
     if (!userNickname) {
-        const baseName = state.currentUser?.display_name || 'Usuario';
+        const baseName = state.currentUser?.email?.split('@')[0] || 'Usuario';
         // Generate unique nickname if not set
         userNickname = await generateUniqueNickname(state.currentGroup.id, baseName);
     }
@@ -294,40 +294,27 @@ async function loadGlobalRanking() {
         return [];
     }
 
-    // Load users and group member nicknames
+    // Load group member nicknames
     const userIds = scores.map(s => s.user_id);
     
-    const [usersResult, membersResult] = await Promise.all([
-        supabase
-            .from('users')
-            .select('id, display_name')
-            .in('id', userIds),
-        supabase
-            .from('group_members')
-            .select('user_id, nickname')
-            .eq('group_id', state.currentGroup.id)
-            .in('user_id', userIds)
-    ]);
+    const { data: members } = await supabase
+        .from('group_members')
+        .select('user_id, nickname')
+        .eq('group_id', state.currentGroup.id)
+        .in('user_id', userIds);
 
-    // Map users and nicknames
-    const userMap = {};
-    if (usersResult.data) {
-        usersResult.data.forEach(u => {
-            userMap[u.id] = u.display_name;
-        });
-    }
-
+    // Map nicknames
     const nicknameMap = {};
-    if (membersResult.data) {
-        membersResult.data.forEach(m => {
+    if (members) {
+        members.forEach(m => {
             nicknameMap[m.user_id] = m.nickname;
         });
     }
 
-    // Add display name to each score
+    // Add display name to each score (use nickname or fallback to user ID)
     return scores.map(score => ({
         ...score,
-        displayName: nicknameMap[score.user_id] || userMap[score.user_id] || `Usuario #${score.user_id.toString().substring(0, 8)}`
+        displayName: nicknameMap[score.user_id] || `Usuario #${score.user_id.toString().substring(0, 8)}`
     }));
 }
 
@@ -439,7 +426,7 @@ function attachEventListeners() {
                     
                     // Get user's nickname for this group
                     const state = getState();
-                    let userNickname = state.currentUser?.display_name || 'Usuario';
+                    let userNickname = state.currentUser?.email?.split('@')[0] || 'Usuario';
                     
                     // Try to get group-specific nickname
                     if (state.currentGroup && state.currentUser) {

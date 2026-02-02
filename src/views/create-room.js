@@ -251,7 +251,7 @@ async function createRoom() {
     }
 
     // Get user's nickname for this group
-    let nickname = state.currentUser?.display_name || 'Usuario';
+    let nickname = state.currentUser?.email?.split('@')[0] || 'Usuario';
     
     // Try to get group-specific nickname
     if (state.currentUser) {
@@ -266,7 +266,7 @@ async function createRoom() {
             nickname = member.nickname;
         } else {
             // Generate unique nickname if not set
-            const baseName = state.currentUser?.display_name || 'Usuario';
+            const baseName = state.currentUser?.email?.split('@')[0] || 'Usuario';
             nickname = await generateUniqueNickname(state.currentGroup.id, baseName);
         }
     }

@@ -180,7 +180,7 @@ function attachEventListeners() {
         }
 
         // Join group with unique default nickname
-        const baseName = state.currentUser.display_name || 'Usuario';
+        const baseName = state.currentUser.email?.split('@')[0] || 'Usuario';
         const uniqueNickname = await generateUniqueNickname(group.id, baseName);
         
         const { error: memberError } = await supabase

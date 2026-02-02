@@ -71,11 +71,7 @@ export function updateParticipantsSilently(participants) {
 
 export function setCurrentUser(user) {
     currentState.currentUser = user;
-    if (user) {
-        localStorage.setItem('current_user', JSON.stringify(user));
-    } else {
-        localStorage.removeItem('current_user');
-    }
+    // Note: Supabase Auth manages sessions automatically, no need to store in localStorage
     notifyListeners();
 }
 
@@ -134,16 +130,11 @@ export function loadAdminToken() {
     }
 }
 
-// Load current user from localStorage
-export function loadCurrentUser() {
-    const userStr = localStorage.getItem('current_user');
-    if (userStr) {
-        try {
-            currentState.currentUser = JSON.parse(userStr);
-        } catch (e) {
-            currentState.currentUser = null;
-        }
-    }
+// Load current user from Supabase Auth session
+export async function loadCurrentUser() {
+    const { getCurrentUser } = await import('./supabase.js');
+    const user = await getCurrentUser();
+    currentState.currentUser = user;
 }
 
 // Clear state (for logout/reset)
@@ -162,7 +153,7 @@ export function clearState() {
         isGroupAdmin: false
     };
     localStorage.removeItem('admin_token');
-    localStorage.removeItem('current_user');
+    // Note: Supabase Auth session is cleared via signOut()
     notifyListeners();
 }
 

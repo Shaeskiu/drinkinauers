@@ -1,4 +1,5 @@
-import { subscribe, setCurrentView, loadAdminToken, loadCurrentUser, getState } from './state.js';
+import { subscribe, setCurrentView, loadAdminToken, loadCurrentUser, getState, setCurrentUser } from './state.js';
+import { supabase } from './supabase.js';
 import { render as renderHome } from './views/home.js';
 import { render as renderLogin } from './views/login.js';
 import { render as renderGroups } from './views/groups.js';
@@ -17,9 +18,34 @@ import { showConfirm } from './components/confirm-modal.js';
 window.toast = toast;
 window.showConfirm = showConfirm;
 
-// Load admin token and current user from localStorage
+// Load admin token
 loadAdminToken();
-loadCurrentUser();
+
+// Load current user from Supabase Auth session and set initial view
+(async () => {
+    await loadCurrentUser();
+    // Initial render after loading user
+    const state = getState();
+    if (!state.currentUser) {
+        setCurrentView('login');
+    } else {
+        setCurrentView('groups');
+    }
+})();
+
+// Listen to auth state changes
+supabase.auth.onAuthStateChange((event, session) => {
+    if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+        setCurrentUser(session?.user || null);
+        const state = getState();
+        if (state.currentView === 'login') {
+            setCurrentView('groups');
+        }
+    } else if (event === 'SIGNED_OUT') {
+        setCurrentUser(null);
+        setCurrentView('login');
+    }
+});
 
 let currentRenderedView = null;
 
@@ -150,10 +176,4 @@ subscribe((state) => {
     }, 0);
 });
 
-// Initial render - check authentication and redirect
-const state = getState();
-if (!state.currentUser) {
-    setCurrentView('login');
-} else {
-    setCurrentView('groups');
-}
+// Initial view will be set after loadCurrentUser() completes

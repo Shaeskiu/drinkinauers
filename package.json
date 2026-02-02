@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "node build.js",
-    "dev": "echo 'Use docker-compose up -d for local development'"
+    "dev": "echo 'Use docker-compose up -d for local development'",
+    "create-user": "node scripts/create-user.js"
   },
   "keywords": [
     "drink-tracker",
@@ -13,5 +14,8 @@
     "spa"
   ],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.93.3"
+  }
 }
