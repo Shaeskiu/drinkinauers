@@ -5,6 +5,10 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+console.log('ENV KEYS:', Object.keys(process.env).sort());
+console.log('SUPABASE_URL:', process.env.SUPABASE_URL);
+console.log('SUPABASE_ANON_KEY:', process.env.SUPABASE_ANON_KEY);
+
 // Obtener variables de entorno
 // En producción, estas variables DEBEN estar configuradas en Cloudflare Pages
 // Si no están configuradas, el build fallará con un error claro
