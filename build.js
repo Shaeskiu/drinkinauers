@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+console.log('Iniciando build...');
 console.log('ENV KEYS:', Object.keys(process.env).sort());
 console.log('SUPABASE_URL:', process.env.SUPABASE_URL);
 console.log('SUPABASE_ANON_KEY:', process.env.SUPABASE_ANON_KEY);
