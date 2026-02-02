@@ -11,8 +11,8 @@ const __dirname = dirname(__filename);
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
 
-/*if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
-    console.error('❌ ERROR: Variables de entorno requeridas no configuradas');
+if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+    console.error('❌ ERROR: Variables de entorno requeridas no configuradas!!');
     console.error('Para producción, configura en Cloudflare Pages:');
     console.error('  - SUPABASE_URL: https://tu-proyecto.supabase.co');
     console.error('  - SUPABASE_ANON_KEY: tu-clave-anon-de-supabase');
@@ -20,7 +20,7 @@ const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
     console.error('Para desarrollo local, estas variables no son necesarias');
     console.error('(la app detectará automáticamente que está en localhost)');
     process.exit(1);
-}*/
+}
 
 const distDir = join(__dirname, 'dist');
 const publicDir = join(__dirname, 'public');
